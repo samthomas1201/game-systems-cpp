@@ -67,11 +67,60 @@ int main() {
 
         switch(cmd) {
             case 'w': 
-            
+            //walking command 
             if (currentState == PlayerState::Idle) {
                 std::cout << "Transition: Idle -> Walking\n";
                 currentState = PlayerState::Walking;
+            } else { 
+                std::cout << "Cannot walk from current state.\n";
+            } 
+            break;
+            case 'r':
+            //running command
+            if (currentState == PlayerState::Walking) {
+                std:cout << "Transition: Walking -> Running\n";
+                currentState = PlayerState::Running;
+            } else {
+                std::cout << "Cannot run from current state.\n";
+            } break;
+
+            case "j":
+            //jumping command
+            if (currentState == PlayerState::Idle) {
+                std::cout << "Transition: Idle -> Jumping\n";
+                currentState = PlayerState::Jumping;
+            } else if (currentState == PlayerState::Walking) {
+                std::cout << "Transition: Walking -> Jumping\n";
+                currentState = PlayerState::Jumping;
+            }else if (currentState == PlayerState::Running) {
+                std::cout << "Transition: Running -> Jumping";
+                currentState = PlayerState::Jumping;
+            } else {
+                std::cout << "Cannot jump from current state.\n";
             }
+            break;
+            case 's':
+            //stop command
+            if (currentState == PlayerState::Walking || currentState == PlayerState::Running || currentState == PlayerState::Jumping) {
+                std::cout << "Transition to Idle\n";
+                currentState = PlayerState::Idle;
+            } else {
+                std::cout << "Already in Idle state.\n";
+            } break;
+
+            case 'q':
+            //quit command
+            std::cout << "End program.\n";
+            isRunning = false;
+            break;
+            }
+
+            default: {
+                std::cout << "Invalid command.\n";
+            }
+            std::cout << "\n";
         }
+        return 0;
     }
-}
+        
+    
